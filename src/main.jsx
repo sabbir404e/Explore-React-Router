@@ -1,4 +1,4 @@
-import { StrictMode, Suspense } from 'react'
+import { Component, StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
@@ -10,6 +10,9 @@ import Laptops from './components/laptops/Laptops.jsx'
 import Users from './components/users/Users.jsx'
 import Users2 from './components/Users2/Users2.jsx'
 import UserDetails from './components/userDetails/UserDetails.jsx'
+import Posts from './components/posts/Posts.jsx'
+import Post from './components/post/Post.jsx'
+import postDetail from './components/postDetail/postDetail.jsx'
 
 
 const userPromise = fetch('https://jsonplaceholder.typicode.com/users')
@@ -39,8 +42,18 @@ const router = createBrowserRouter([
       },
       {
         path: 'users/:userId',
-        loader: ({params}) => fetch('https://jsonplaceholder.typicode.com/users'),
+          loader: ({params}) => fetch(`https://jsonplaceholder.typicode.com/users/${params.userId}`),
         Component: UserDetails
+      },
+      {
+        path: 'posts',
+        loader: () => fetch('https://jsonplaceholder.typicode.com/posts'),
+        Component: Posts
+      },
+      {
+        path: 'posts/:postId',
+        loader: ({params}) => fetch(`https://jsonplaceholder.typicode.com/posts/${params.postId}`),
+        Component: postDetail
       }
     ]
   },
